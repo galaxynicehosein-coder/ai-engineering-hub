@@ -1,0 +1,1930 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پیگیری فعالیت‌های واحد آب و آبگیر - پتروشیمی دماوند انرژی عسلویه</title>
+    <!-- فونت وزیرمتن برای نمایش زیبای متون فارسی -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- کتابخانه Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- کتابخانه Chart.js برای رسم نمودارها -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- آیکون‌های Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        petro: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#1d4ed8',
+                            800: '#1e3a8a',
+                            900: '#172554',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #bae6fd 0%, #93c5fd 50%, #bfdbfe 100%);
+            font-family: 'Vazirmatn', sans-serif;
+            overflow-x: hidden;
+        }
+        /* استایل اسکرول بار سفارشی */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #dbeafe; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1d4ed8; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e3a8a; 
+        }
+        .card-shadow {
+            box-shadow: 0 6px 24px -2px rgba(29, 78, 216, 0.16);
+        }
+        /* استایل‌های حالت سه‌بعدی (3D Mode) */
+        body.mode-3d {
+            background: radial-gradient(circle at top right, #93c5fd, #bae6fd 45%, #7dd3fc 100%);
+            perspective: 1800px;
+        }
+        body.mode-3d .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+            box-shadow: 
+                0 12px 24px -6px rgba(23, 37, 84, 0.22),
+                0 4px 0px 0px #93c5fd,
+                0 8px 0px 0px rgba(29, 78, 216, 0.12);
+            border-bottom: 2px solid #60a5fa;
+        }
+        body.mode-3d .card-3d:hover {
+            transform: translateY(-6px) translateZ(18px) rotateX(1.5deg);
+            box-shadow: 
+                0 22px 35px -8px rgba(30, 58, 138, 0.25),
+                0 6px 0px 0px #3b82f6,
+                0 12px 15px 0px rgba(29, 78, 216, 0.16);
+        }
+        body.mode-3d aside.card-3d {
+            transform: none !important;
+            box-shadow: 
+                -10px 15px 30px rgba(30, 58, 138, 0.3),
+                -4px 4px 0px #1d4ed8;
+            z-index: 30;
+        }
+        /* استایل کلیدهای برجسته (3D Tactile Embossed Buttons) */
+        .btn-embossed {
+            position: relative;
+            z-index: 10;
+            transform: translateY(0);
+            transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.12));
+            box-shadow: 
+                0 5px 0 #172554,
+                0 8px 16px rgba(23, 37, 84, 0.35),
+                inset 0 2px 1px rgba(255, 255, 255, 0.55);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .btn-embossed:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 7px 0 #172554,
+                0 12px 22px rgba(23, 37, 84, 0.42),
+                inset 0 2px 2px rgba(255, 255, 255, 0.7);
+        }
+        .btn-embossed:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 1px 0 #172554,
+                0 3px 6px rgba(23, 37, 84, 0.25),
+                inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .btn-embossed-light {
+            position: relative;
+            z-index: 10;
+            transform: translateY(0);
+            transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(219, 234, 254, 0.5));
+            box-shadow: 
+                0 5px 0 #60a5fa,
+                0 7px 14px rgba(29, 78, 216, 0.22),
+                inset 0 2px 1px rgba(255, 255, 255, 1);
+            border-top: 1px solid #ffffff;
+        }
+        .btn-embossed-light:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 7px 0 #3b82f6,
+                0 11px 18px rgba(29, 78, 216, 0.28),
+                inset 0 2px 1px rgba(255, 255, 255, 1);
+        }
+        .btn-embossed-light:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 1px 0 #60a5fa,
+                0 2px 5px rgba(29, 78, 216, 0.18);
+        }
+        .btn-embossed-danger {
+            position: relative;
+            z-index: 10;
+            transform: translateY(0);
+            transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 5px 0 #881337,
+                0 8px 15px rgba(225, 29, 72, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+        }
+        .btn-embossed-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 7px 0 #881337,
+                0 12px 20px rgba(225, 29, 72, 0.4),
+                inset 0 1px 2px rgba(255, 255, 255, 0.6);
+        }
+        .btn-embossed-danger:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 1px 0 #881337,
+                0 3px 6px rgba(225, 29, 72, 0.25);
+        }
+        .btn-embossed-cyan {
+            position: relative;
+            z-index: 10;
+            transform: translateY(0);
+            transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 
+                0 5px 0 #0369a1,
+                0 8px 15px rgba(2, 132, 199, 0.35),
+                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        .btn-embossed-cyan:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 7px 0 #0369a1,
+                0 12px 20px rgba(2, 132, 199, 0.45),
+                inset 0 1px 2px rgba(255, 255, 255, 0.75);
+        }
+        .btn-embossed-cyan:active {
+            transform: translateY(4px);
+            box-shadow: 
+                0 1px 0 #0369a1,
+                0 3px 6px rgba(2, 132, 199, 0.25);
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(244, 63, 94, 0.4); }
+            50% { border-color: rgba(244, 63, 94, 1); }
+        }
+        .overdue-row {
+            background-color: rgba(255, 241, 242, 0.65);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col lg:flex-row p-2 sm:p-4 gap-4 mode-3d">
+
+    <!-- نوار کناری (Sidebar) مشابه طرح الگو -->
+    <aside class="w-full lg:w-64 bg-gradient-to-b from-blue-950 via-blue-900 to-blue-800 text-white rounded-3xl lg:rounded-[3rem] p-5 flex flex-col justify-between card-shadow card-3d shrink-0 border border-blue-600/40">
+        <div>
+            <!-- لوگو و عنوان واحد -->
+            <div class="flex flex-col items-center text-center mb-8 mt-2">
+                <div class="w-20 h-20 rounded-full bg-white text-petro-900 flex flex-col items-center justify-center shadow-lg border-4 border-sky-400 mb-3">
+                    <i data-lucide="droplets" class="w-8 h-8 text-blue-600"></i>
+                    <span class="text-[10px] font-bold tracking-tighter mt-0.5">DAMAVAND</span>
+                </div>
+                <h2 class="font-bold text-sm text-white leading-snug">پتروشیمی دماوند انرژی عسلویه</h2>
+                <span class="text-xs text-sky-200 mt-1.5 bg-blue-950/80 border border-blue-700/60 px-3 py-1 rounded-full">واحد آب و آبگیر (Water & Intake)</span>
+            </div>
+
+            <!-- منوی ناوبری -->
+            <nav class="space-y-3.5 flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible pb-3 lg:pb-0 gap-2.5 lg:gap-0 relative z-30">
+                <button type="button" id="nav-overview" class="nav-btn btn-embossed-light w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium bg-petro-100 text-petro-900 font-bold whitespace-nowrap cursor-pointer">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 pointer-events-none"></i>
+                    <span class="pointer-events-none">نمای کلی و ارزیابی</span>
+                </button>
+                <button type="button" id="nav-activities" class="nav-btn btn-embossed w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium bg-petro-800 text-petro-100 hover:bg-petro-700 border border-petro-600/50 whitespace-nowrap cursor-pointer">
+                    <i data-lucide="list-checks" class="w-4 h-4 shrink-0 pointer-events-none"></i>
+                    <span class="pointer-events-none">جدول جامع فعالیت‌ها</span>
+                </button>
+                <button type="button" id="nav-new-activity" class="btn-embossed-cyan w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium bg-sky-400 hover:bg-sky-300 text-slate-950 font-black mt-0 lg:mt-4 whitespace-nowrap cursor-pointer">
+                    <i data-lucide="plus-circle" class="w-4 h-4 shrink-0 pointer-events-none"></i>
+                    <span class="pointer-events-none">ثبت فعالیت جدید</span>
+                </button>
+                <button type="button" id="nav-overdue-alert" class="btn-embossed-danger w-full flex items-center justify-between gap-2 px-4 py-3 rounded-full text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white mt-0 lg:mt-2 whitespace-nowrap cursor-pointer">
+                    <span class="flex items-center gap-2 pointer-events-none">
+                        <i data-lucide="bell-ring" class="w-4 h-4 shrink-0 animate-bounce"></i>
+                        <span>هشدار تاخیرها</span>
+                    </span>
+                    <span id="sidebar-overdue-badge" class="bg-white text-rose-700 px-2 py-0.5 rounded-full text-[11px] font-black shadow-inner pointer-events-none">0</span>
+                </button>
+                <button type="button" id="nav-management-report" class="btn-embossed-cyan w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-black bg-gradient-to-l from-cyan-400 to-sky-300 hover:from-cyan-300 hover:to-sky-200 text-blue-950 mt-0 lg:mt-2 whitespace-nowrap cursor-pointer">
+                    <i data-lucide="file-spreadsheet" class="w-4 h-4 shrink-0 pointer-events-none"></i>
+                    <span class="pointer-events-none">گزارش به ریاست کارگاه و معاونت‌ها</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- بخش اطلاعات پایین سایدبار -->
+        <div class="hidden lg:flex flex-col items-center text-center pt-6 border-t border-petro-800 mt-6 gap-2">
+            <div class="flex items-center gap-2 text-xs text-petro-200">
+                <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                <span>پایش خودکار زمان‌بندی فعال</span>
+            </div>
+            <p class="text-[11px] text-petro-200/70">کنترل پروژه و برنامه‌ریزی تعمیرات و اجرا</p>
+        </div>
+    </aside>
+
+    <!-- محتوای اصلی داشبورد -->
+    <main class="flex-1 flex flex-col gap-4 min-w-0">
+        
+        <!-- هدر کپسولی بالای صفحه -->
+        <header class="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="w-full sm:w-auto flex-1 flex justify-center">
+                <div class="bg-gradient-to-l from-petro-900 via-petro-800 to-petro-700 text-white px-6 sm:px-10 py-3 rounded-full shadow-md card-3d text-center w-full sm:w-auto border border-petro-500/40">
+                    <h1 class="text-sm sm:text-base md:text-lg font-bold tracking-wide">
+                        پتروشیمی دماوند انرژی عسلویه - سامانه پیگیری فعالیت‌های قابل اجرا (واحد آب و آبگیر)
+                    </h1>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-2.5 shrink-0 pb-1">
+                <!-- دکمه تغییر حالت سه‌بعدی / تخت -->
+                <button type="button" onclick="toggle3DMode()" id="btn-3d-toggle" class="btn-embossed bg-petro-700 hover:bg-petro-600 text-white px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
+                    <i data-lucide="box" class="w-4 h-4"></i>
+                    <span id="btn-3d-label">نمای سه‌بعدی: فعال</span>
+                </button>
+                <!-- دکمه ارسال پیام گروهی به فعالیت‌های عقب‌افتاده -->
+                <button type="button" onclick="checkOverdueAndNotify(true)" class="btn-embossed-danger bg-rose-600 hover:bg-rose-500 text-white px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    <span>بررسی تاخیر و ارسال پیام</span>
+                </button>
+                <button type="button" onclick="exportToCSV()" class="btn-embossed-light bg-white hover:bg-petro-50 text-petro-800 border border-petro-200 px-4 py-2.5 rounded-full text-xs font-bold flex items-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i>
+                    <span>خروجی اکسل</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- نوار فیلترها (Slicers) -->
+        <section class="bg-blue-50/95 backdrop-blur-md rounded-2xl p-4 card-shadow card-3d grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 items-end border border-blue-200">
+            <div>
+                <label class="block text-xs font-bold text-blue-950 mb-1.5">جستجو در شرح کار / شماره</label>
+                <div class="relative">
+                    <input type="text" id="filter-search" oninput="applyFilters()" placeholder="جستجو..." class="w-full bg-white border border-blue-300 rounded-xl px-3 py-2 text-xs shadow-inner focus:outline-none focus:border-blue-600">
+                </div>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-blue-950 mb-1.5">نوع فعالیت</label>
+                <select id="filter-type" onchange="applyFilters()" class="btn-embossed w-full bg-blue-800 text-white text-xs font-bold rounded-xl px-3 py-2 focus:outline-none cursor-pointer">
+                    <option value="all">همه فعالیت‌ها</option>
+                    <option value="مکانیک و پایپینگ">مکانیک و پایپینگ</option>
+                    <option value="برق و ابزار دقیق">برق و ابزار دقیق</option>
+                    <option value="سیویل و سازه">سیویل و سازه</option>
+                    <option value="تجهیزات دوار (پمپ/توربین)">تجهیزات دوار (پمپ/توربین)</option>
+                    <option value="پیش‌راه‌اندازی و تست">پیش‌راه‌اندازی و تست</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-blue-950 mb-1.5">وضعیت مدارک مهندسی</label>
+                <select id="filter-eng" onchange="applyFilters()" class="btn-embossed w-full bg-blue-800 text-white text-xs font-bold rounded-xl px-3 py-2 focus:outline-none cursor-pointer">
+                    <option value="all">همه وضعیت‌ها</option>
+                    <option value="تایید نهایی (AFC)">تایید نهایی (AFC)</option>
+                    <option value="در دست بررسی">در دست بررسی</option>
+                    <option value="نیاز به اصلاح">نیاز به اصلاح</option>
+                    <option value="تکمیل نشده">تکمیل نشده</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-blue-950 mb-1.5">وضعیت متریال و کالا</label>
+                <select id="filter-mat" onchange="applyFilters()" class="btn-embossed w-full bg-blue-800 text-white text-xs font-bold rounded-xl px-3 py-2 focus:outline-none cursor-pointer">
+                    <option value="all">همه وضعیت‌ها</option>
+                    <option value="تامین شده در سایت">تامین شده در سایت</option>
+                    <option value="در حال حمل / گمرک">در حال حمل / گمرک</option>
+                    <option value="در مرحله خرید">در مرحله خرید</option>
+                    <option value="کسری متریال">کسری متریال</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-blue-950 mb-1.5">اجرا کننده (پیمانکار)</label>
+                <select id="filter-executor" onchange="applyFilters()" class="btn-embossed w-full bg-blue-800 text-white text-xs font-bold rounded-xl px-3 py-2 focus:outline-none cursor-pointer">
+                    <option value="all">همه اجراکنندگان</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-blue-950 mb-1.5">نفر مستقیم (مسئول اجرا)</label>
+                <select id="filter-direct-person" onchange="applyFilters()" class="btn-embossed w-full bg-blue-700 text-white text-xs font-bold rounded-xl px-3 py-2 focus:outline-none cursor-pointer">
+                    <option value="all">همه نفرات مستقیم</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- کارت‌های شاخص کلیدی (KPI Cards) -->
+        <section id="kpi-section" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+            <!-- کارت ۱: کل فعالیت‌ها -->
+            <div class="bg-white rounded-2xl p-4 card-shadow card-3d flex items-center justify-between border-r-4 border-petro-700">
+                <div>
+                    <span class="text-2xl sm:text-3xl font-black text-petro-800" id="kpi-total">0</span>
+                    <p class="text-xs font-bold text-petro-600 mt-1">کل فعالیت‌های تعریف شده</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-petro-50 flex items-center justify-center text-petro-700">
+                    <i data-lucide="layers" class="w-6 h-6"></i>
+                </div>
+            </div>
+
+            <!-- کارت ۲: میانگین پیشرفت -->
+            <div class="bg-white rounded-2xl p-4 card-shadow card-3d flex items-center justify-between border-r-4 border-sky-500">
+                <div>
+                    <span class="text-2xl sm:text-3xl font-black text-petro-800" id="kpi-progress">0%</span>
+                    <p class="text-xs font-bold text-petro-600 mt-1">میانگین پیشرفت کل واحد</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-sky-50 flex items-center justify-center text-sky-600">
+                    <i data-lucide="trending-up" class="w-6 h-6"></i>
+                </div>
+            </div>
+
+            <!-- کارت ۳: فعالیت‌های تکمیل شده -->
+            <div class="bg-white rounded-2xl p-4 card-shadow card-3d flex items-center justify-between border-r-4 border-blue-600">
+                <div>
+                    <span class="text-2xl sm:text-3xl font-black text-petro-800" id="kpi-completed">0</span>
+                    <p class="text-xs font-bold text-petro-600 mt-1">فعالیت‌های تکمیل شده (۱۰۰٪)</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-700">
+                    <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                </div>
+            </div>
+
+            <!-- کارت ۴: دارای مشکل / تاخیر زمانی -->
+            <div onclick="checkOverdueAndNotify(true)" class="cursor-pointer bg-white rounded-2xl p-4 card-shadow card-3d flex items-center justify-between border-r-4 border-rose-500">
+                <div>
+                    <span class="text-2xl sm:text-3xl font-black text-rose-600" id="kpi-overdue">0</span>
+                    <p class="text-xs font-bold text-rose-600 mt-1">عبور از تاریخ اتمام (تاخیر)</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-600">
+                    <i data-lucide="alarm-clock-off" class="w-6 h-6"></i>
+                </div>
+            </div>
+
+            <!-- کارت ۵: مجموع نفر-روز / مدت اجرا -->
+            <div class="bg-white rounded-2xl p-4 card-shadow card-3d flex items-center justify-between border-r-4 border-cyan-600">
+                <div>
+                    <span class="text-2xl sm:text-3xl font-black text-petro-800" id="kpi-duration">0</span>
+                    <p class="text-xs font-bold text-petro-600 mt-1">مجموع روزهای کاری برنامه‌ریزی</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-cyan-50 flex items-center justify-center text-cyan-700">
+                    <i data-lucide="clock" class="w-6 h-6"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش نمودارها (Charts Section) -->
+        <section id="charts-section" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+            <!-- نمودار ۱: وضعیت متریال و مدارک (Bar Chart) -->
+            <div class="lg:col-span-4 bg-white rounded-2xl p-4 card-shadow card-3d flex flex-col">
+                <h3 class="text-sm font-bold text-slate-800 text-center mb-3">وضعیت تامین متریال و کالا</h3>
+                <div class="relative flex-1 min-h-[220px]">
+                    <canvas id="materialChart"></canvas>
+                </div>
+            </div>
+
+            <!-- نمودار ۲: گیج درصد پیشرفت کلی (Doughnut Gauge) -->
+            <div class="lg:col-span-4 bg-white rounded-2xl p-4 card-shadow card-3d flex flex-col items-center justify-between">
+                <h3 class="text-sm font-bold text-slate-800 text-center">نرخ تکمیل و پیشرفت کل پروژه</h3>
+                <div class="relative w-full max-w-[240px] h-[180px] flex items-center justify-center">
+                    <canvas id="gaugeChart"></canvas>
+                    <div class="absolute bottom-4 flex flex-col items-center">
+                        <span id="gauge-text" class="text-3xl font-black text-petro-800">0%</span>
+                        <span class="text-[11px] text-slate-500">پیشرفت فیزیکی کل</span>
+                    </div>
+                </div>
+                <div class="w-full grid grid-cols-2 gap-2 text-center text-xs bg-petro-50 p-2 rounded-xl">
+                    <div>
+                        <span class="text-slate-500 block">در حال اجرا:</span>
+                        <span id="stat-inprogress" class="font-bold text-petro-800">0 مورد</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 block">تایید مدارک AFC:</span>
+                        <span id="stat-afc" class="font-bold text-blue-700">0 مورد</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نمودار ۳: توزیع فعالیت‌ها بر اساس نوع تخصص (Grouped Bar / Horizontal) -->
+            <div class="lg:col-span-4 bg-white rounded-2xl p-4 card-shadow card-3d flex flex-col">
+                <h3 class="text-sm font-bold text-slate-800 text-center mb-3">پیشرفت بر اساس نوع فعالیت (تخصص)</h3>
+                <div class="relative flex-1 min-h-[220px]">
+                    <canvas id="typeChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- باکس اختصاصی پیگیری نفرات مستقیم مسئول فعالیت‌ها -->
+        <section id="direct-persons-section" class="bg-white rounded-2xl p-4 card-shadow card-3d flex flex-col gap-3 border-t-4 border-petro-600">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-xl bg-petro-100 text-petro-800 flex items-center justify-center">
+                        <i data-lucide="user-check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base text-slate-800">باکس پیگیری نفرات مستقیم مسئول فعالیت‌ها (همراه با شماره تماس و هشدار)</h3>
+                        <p class="text-[11px] text-slate-500">با کلیک روی کارت هر نفر، فعالیت‌های او فیلتر می‌شود. در صورت عبور از تاریخ اتمام، دکمه ارسال پیام اخطار فعال می‌گردد.</p>
+                    </div>
+                </div>
+                <button type="button" onclick="filterByDirectPerson('all')" id="btn-show-all-persons" class="hidden text-xs bg-petro-100 hover:bg-petro-200 text-petro-900 font-bold px-3 py-1.5 rounded-xl transition items-center gap-1 self-start sm:self-auto">
+                    <i data-lucide="users" class="w-3.5 h-3.5"></i>
+                    <span>نمایش همه نفرات</span>
+                </button>
+            </div>
+            <!-- گرید کارت‌های نفرات مستقیم -->
+            <div id="direct-persons-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <!-- کارت‌های نفرات مستقیم با جاوااسکریپت ساخته می‌شوند -->
+            </div>
+        </section>
+
+        <!-- بخش جدول جامع فعالیت‌ها و بروزرسانی -->
+        <section id="activities-table-section" class="bg-white rounded-2xl p-4 card-shadow card-3d flex flex-col gap-3">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-6 bg-petro-700 rounded-full"></div>
+                    <h3 class="font-bold text-base text-slate-800">لیست جامع فعالیت‌های واحد آب و آبگیر</h3>
+                    <span id="table-count" class="bg-petro-100 text-petro-800 text-xs font-bold px-2.5 py-0.5 rounded-full">0 مورد</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-[11px] text-slate-500 bg-slate-100 px-2.5 py-1 rounded-lg">تاریخ مبنای سیستم: <strong id="current-jalali-date" class="text-petro-800">۱۴۰۵/۰۸/۲۴</strong></span>
+                    <button type="button" onclick="resetFilters()" class="btn-embossed-light bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 px-3 py-1.5 rounded-xl">پاک کردن فیلترها</button>
+                    <button type="button" onclick="openModal()" class="btn-embossed bg-petro-700 hover:bg-petro-600 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>افزودن ردیف جدید</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- کانتینر ریسپانسیو جدول -->
+            <div class="overflow-x-auto rounded-xl border border-slate-200">
+                <table class="w-full text-right border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-petro-800 text-white whitespace-nowrap">
+                            <th class="p-3 font-bold">ردیف</th>
+                            <th class="p-3 font-bold min-w-[200px]">شرح کار</th>
+                            <th class="p-3 font-bold">نوع فعالیت</th>
+                            <th class="p-3 font-bold">زمان انجام (شروع)</th>
+                            <th class="p-3 font-bold">مدت اجرا</th>
+                            <th class="p-3 font-bold">تاریخ اتمام</th>
+                            <th class="p-3 font-bold">اجرا کننده</th>
+                            <th class="p-3 font-bold bg-petro-900">نفر مستقیم و تماس</th>
+                            <th class="p-3 font-bold">پیگیری کننده و تماس</th>
+                            <th class="p-3 font-bold">مدارک مهندسی</th>
+                            <th class="p-3 font-bold">متریال و کالا</th>
+                            <th class="p-3 font-bold min-w-[140px]">درصد پیشرفت</th>
+                            <th class="p-3 font-bold min-w-[160px]">مشکلات و موانع</th>
+                            <th class="p-3 font-bold min-w-[160px]">توضیحات</th>
+                            <th class="p-3 font-bold text-center sticky left-0 bg-petro-800">عملیات / پیام</th>
+                        </tr>
+                    </thead>
+                    <tbody id="activities-tbody" class="divide-y divide-slate-100">
+                        <!-- ردیف‌ها با جاوااسکریپت ساخته می‌شوند -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- مودال ثبت و ویرایش / بروزرسانی فعالیت -->
+    <div id="activity-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl w-full max-w-3xl p-5 sm:p-6 shadow-2xl my-auto">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-xl bg-petro-100 text-petro-800 flex items-center justify-center">
+                        <i data-lucide="edit-3" class="w-4 h-4"></i>
+                    </div>
+                    <h3 id="modal-title" class="text-base sm:text-lg font-bold text-slate-800">بروزرسانی / ثبت فعالیت واحد آب و آبگیر</h3>
+                </div>
+                <button type="button" onclick="closeModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form id="activity-form" onsubmit="saveActivity(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 text-xs">
+                <input type="hidden" id="form-id">
+
+                <!-- شرح کار -->
+                <div class="sm:col-span-2 lg:col-span-3">
+                    <label class="block font-bold text-slate-700 mb-1">شرح کار <span class="text-red-500">*</span></label>
+                    <input type="text" id="form-desc" required placeholder="مثال: نصب و هم‌محوری الکتروپمپ‌های اصلی حوضچه آبگیر (Intake Basin)" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- نوع فعالیت -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">نوع فعالیت <span class="text-red-500">*</span></label>
+                    <select id="form-type" required class="w-full border border-slate-300 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:border-petro-600">
+                        <option value="مکانیک و پایپینگ">مکانیک و پایپینگ</option>
+                        <option value="برق و ابزار دقیق">برق و ابزار دقیق</option>
+                        <option value="سیویل و سازه">سیویل و سازه</option>
+                        <option value="تجهیزات دوار (پمپ/توربین)">تجهیزات دوار (پمپ/توربین)</option>
+                        <option value="پیش‌راه‌اندازی و تست">پیش‌راه‌اندازی و تست</option>
+                    </select>
+                </div>
+
+                <!-- زمان انجام فعالیت -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">زمان انجام فعالیت (شروع) <span class="text-red-500">*</span></label>
+                    <input type="text" id="form-start" required placeholder="مثال: ۱۴۰۵/۰۸/۰۱" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- مدت زمان اجرای فعالیت -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">مدت زمان اجرای فعالیت (روز) <span class="text-red-500">*</span></label>
+                    <input type="number" id="form-duration" min="1" required placeholder="مثال: 15" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- تاریخ اتمام فعالیت -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">تاریخ اتمام فعالیت <span class="text-red-500">*</span></label>
+                    <input type="text" id="form-end" required placeholder="مثال: ۱۴۰۵/۰۸/۲۰" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- اجرا کننده -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">اجرا کننده (پیمانکار/واحد) <span class="text-red-500">*</span></label>
+                    <input type="text" id="form-executor" required placeholder="نام پیمانکار یا واحد مجری" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- نفر مستقیم -->
+                <div>
+                    <label class="block font-bold text-petro-800 mb-1">نفر مستقیم (مسئول اجرا) <span class="text-red-500">*</span></label>
+                    <input type="text" id="form-direct-person" required placeholder="نام و نام خانوادگی نفر مستقیم" class="w-full border border-petro-300 bg-petro-50/40 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- شماره تماس نفر مستقیم -->
+                <div>
+                    <label class="block font-bold text-petro-800 mb-1">شماره تماس نفر مستقیم <span class="text-red-500">*</span></label>
+                    <input type="tel" id="form-direct-phone" required placeholder="مثال: 09123456789" dir="ltr" class="w-full text-right border border-petro-300 bg-petro-50/40 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- پیگیری کننده -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">پیگیری کننده <span class="text-red-500">*</span></label>
+                    <input type="text" id="form-follower" required placeholder="نام کارشناس / سرپرست پیگیر" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- شماره تماس پیگیری کننده -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">شماره تماس پیگیری کننده</label>
+                    <input type="tel" id="form-follower-phone" placeholder="مثال: 09129876543" dir="ltr" class="w-full text-right border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- وضعیت مدارک مهندسی -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">وضعیت مدارک مهندسی</label>
+                    <select id="form-eng" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:border-petro-600">
+                        <option value="تایید نهایی (AFC)">تایید نهایی (AFC)</option>
+                        <option value="در دست بررسی">در دست بررسی</option>
+                        <option value="نیاز به اصلاح">نیاز به اصلاح</option>
+                        <option value="تکمیل نشده">تکمیل نشده</option>
+                    </select>
+                </div>
+
+                <!-- وضعیت متریال و کالا -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">وضعیت متریال و کالا</label>
+                    <select id="form-mat" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 bg-white focus:outline-none focus:border-petro-600">
+                        <option value="تامین شده در سایت">تامین شده در سایت</option>
+                        <option value="در حال حمل / گمرک">در حال حمل / گمرک</option>
+                        <option value="در مرحله خرید">در مرحله خرید</option>
+                        <option value="کسری متریال">کسری متریال</option>
+                    </select>
+                </div>
+
+                <!-- درصد پیشرفت -->
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1 flex justify-between">
+                        <span>درصد پیشرفت</span>
+                        <span id="range-val" class="text-petro-700 font-black">0%</span>
+                    </label>
+                    <input type="range" id="form-progress" min="0" max="100" value="0" oninput="document.getElementById('range-val').innerText = this.value + '%'" class="w-full accent-petro-700 mt-2 cursor-pointer">
+                </div>
+
+                <!-- مشکلات -->
+                <div class="sm:col-span-2 lg:col-span-3">
+                    <label class="block font-bold text-slate-700 mb-1">مشکلات و موانع اجرایی (در صورت وجود)</label>
+                    <input type="text" id="form-issues" placeholder="مثال: تاخیر در ترخیص ولوهای پروانه‌ای خط مکش / بدون مشکل" class="w-full border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:border-petro-600">
+                </div>
+
+                <!-- توضیحات -->
+                <div class="sm:col-span-2 lg:col-span-3">
+                    <label class="block font-bold text-slate-700 mb-1">توضیحات تکمیلی</label>
+                    <textarea id="form-notes" rows="2" placeholder="جزئیات بیشتر جهت گزارش مدیریت..." class="w-full border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-petro-600"></textarea>
+                </div>
+
+                <div class="sm:col-span-2 lg:col-span-3 flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100 mt-2">
+                    <button type="button" onclick="closeModal()" class="btn-embossed-light px-5 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold hover:bg-slate-200">انصراف</button>
+                    <button type="submit" class="btn-embossed px-6 py-2.5 rounded-xl bg-petro-700 hover:bg-petro-600 text-white font-bold flex items-center gap-1.5">
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                        <span>ذخیره و بروزرسانی داشبورد</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- مودال مرکز ارسال پیام هشدار تاخیر به نفرات مسئول -->
+    <div id="overdue-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl w-full max-w-3xl p-5 sm:p-6 shadow-2xl my-auto border-t-8 border-rose-600">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                        <i data-lucide="bell-ring" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-black text-slate-800">مرکز ارسال پیام هشدار تاخیر (عبور از تاریخ اتمام)</h3>
+                        <p class="text-xs text-slate-500">فعالیت‌های زیر از تاریخ اتمام عبور کرده و هنوز ۱۰۰٪ تکمیل نشده‌اند. پیام یادآوری آماده ارسال است:</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeOverdueModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div id="overdue-list" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+                <!-- لیست پیام‌های هشدار با جاوااسکریپت پر می‌شود -->
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-4 border-t border-slate-100 mt-4">
+                <span class="text-[11px] text-slate-500">امکان ارسال مستقیم از طریق پیامک گوشی (SMS)، واتساپ یا کپی متن اخطار وجود دارد.</span>
+                <div class="flex items-center gap-2.5">
+                    <button type="button" onclick="sendAllOverdueSimulated()" class="btn-embossed-danger px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold flex items-center gap-1.5">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span>ارسال خودکار به همه مسئولین دارای تاخیر</span>
+                    </button>
+                    <button type="button" onclick="closeOverdueModal()" class="btn-embossed-light px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold hover:bg-slate-200">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- مودال گزارش‌گیری مدیریتی و ارسال به ریاست کارگاه و معاونت‌ها -->
+    <div id="management-report-modal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl w-full max-w-4xl p-5 sm:p-6 shadow-2xl my-auto border-t-8 border-blue-800">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-2xl bg-blue-100 text-blue-800 flex items-center justify-center">
+                        <i data-lucide="building-2" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-black text-blue-950">سامانه گزارش‌گیری و ارسال به ریاست کارگاه و معاونت‌ها</h3>
+                        <p class="text-xs text-slate-500">پتروشیمی دماوند انرژی عسلویه - واحد آب و آبگیر (Water & Intake)</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeReportModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">گیرنده گزارش (مقام مسئول):</label>
+                    <select id="report-recipient" onchange="generateManagementReport()" class="w-full border border-blue-300 bg-blue-50/50 rounded-xl px-3 py-2.5 font-bold text-blue-950 focus:outline-none focus:border-blue-700">
+                        <option value="ریاست محترم کارگاه (Site Manager)">ریاست محترم کارگاه (Site Manager)</option>
+                        <option value="معاونت محترم اجرایی و ساخت">معاونت محترم اجرایی و ساخت</option>
+                        <option value="معاونت محترم مهندسی و برنامه‌ریزی">معاونت محترم مهندسی و برنامه‌ریزی</option>
+                        <option value="معاونت محترم تدارکات و کالای پروژه">معاونت محترم تدارکات و کالای پروژه</option>
+                        <option value="معاونت محترم پیش‌راه‌اندازی و بهره‌برداری">معاونت محترم پیش‌راه‌اندازی و بهره‌برداری</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">نوع و دامنه گزارش:</label>
+                    <select id="report-scope" onchange="generateManagementReport()" class="w-full border border-blue-300 bg-blue-50/50 rounded-xl px-3 py-2.5 font-bold text-blue-950 focus:outline-none focus:border-blue-700">
+                        <option value="summary">گزارش جامع مدیریتی (وضعیت کل + موانع + تاخیرها)</option>
+                        <option value="overdue">گزارش ویژه فعالیت‌های دارای تاخیر و بحرانی</option>
+                        <option value="procurement">گزارش وضعیت مدارک مهندسی و تامین متریال</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">شماره همراه / واتساپ گیرنده:</label>
+                    <input type="tel" id="report-phone" value="09120001122" dir="ltr" placeholder="0912..." class="w-full text-right border border-blue-300 rounded-xl px-3 py-2.5 font-mono focus:outline-none focus:border-blue-700">
+                </div>
+            </div>
+
+            <!-- پیش‌نمایش متن گزارش رسمی -->
+            <div class="mb-4">
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-xs font-bold text-blue-900">متن گزارش رسمی آماده ارسال (قابل ویرایش):</span>
+                    <span id="report-date-badge" class="text-[11px] bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded-full font-bold"></span>
+                </div>
+                <textarea id="management-report-text" rows="10" class="w-full border border-blue-200 bg-slate-50 rounded-2xl p-3.5 text-xs leading-6 text-slate-800 font-medium focus:outline-none focus:border-blue-600"></textarea>
+            </div>
+
+            <!-- دکمه‌های ارسال و خروجی -->
+            <div class="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-slate-100">
+                <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" onclick="copyManagementReport()" class="btn-embossed-light px-4 py-2.5 rounded-xl bg-blue-50 text-blue-900 text-xs font-bold flex items-center gap-1.5">
+                        <i data-lucide="copy" class="w-4 h-4"></i>
+                        <span>کپی متن گزارش</span>
+                    </button>
+                    <button type="button" onclick="exportToCSV()" class="btn-embossed-light px-4 py-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold flex items-center gap-1.5">
+                        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+                        <span>دانلود فایل اکسل پیوست</span>
+                    </button>
+                    <button type="button" onclick="printManagementReport()" class="btn-embossed-light px-4 py-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold flex items-center gap-1.5">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                        <span>چاپ / خروجی PDF</span>
+                    </button>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" onclick="sendReportViaSMS()" class="btn-embossed px-4 py-2.5 rounded-xl bg-blue-800 text-white text-xs font-bold flex items-center gap-1.5">
+                        <i data-lucide="smartphone" class="w-4 h-4"></i>
+                        <span>ارسال پیامک (SMS)</span>
+                    </button>
+                    <button type="button" onclick="sendReportViaWhatsApp()" class="btn-embossed-cyan px-4 py-2.5 rounded-xl bg-sky-500 text-blue-950 text-xs font-black flex items-center gap-1.5">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span>ارسال مستقیم در واتساپ</span>
+                    </button>
+                    <button type="button" onclick="closeReportModal()" class="btn-embossed-light px-4 py-2.5 rounded-xl bg-slate-200 text-slate-700 text-xs font-bold">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- پیام اعلان (Toast Notification) -->
+    <div id="toast" class="fixed bottom-5 left-5 bg-petro-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-bold transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <i data-lucide="check-circle" class="w-4 h-4 text-sky-400"></i>
+        <span id="toast-msg">تغییرات با موفقیت اعمال شد.</span>
+    </div>
+
+    <script>
+        // تبدیل تاریخ شمسی امروز به فرمت عددی و رشته‌ای برای مقایسه دقیق تاخیرها
+        function getTodayJalali() {
+            try {
+                const now = new Date();
+                const parts = new Intl.DateTimeFormat('fa-IR-u-nu-latn', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).formatToParts(now);
+                const y = parts.find(p => p.type === 'year').value;
+                const m = parts.find(p => p.type === 'month').value;
+                const d = parts.find(p => p.type === 'day').value;
+                return `${y}/${m}/${d}`;
+            } catch (e) {
+                return '1405/08/24';
+            }
+        }
+
+        // تبدیل اعداد فارسی/عربی به انگلیسی و استانداردسازی تاریخ برای مقایسه
+        function normalizeDateStr(dateStr) {
+            if (!dateStr) return '';
+            const persianDigits = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+            let res = String(dateStr).trim();
+            for (let i = 0; i < 10; i++) {
+                res = res.replace(persianDigits[i], i);
+            }
+            const parts = res.split(/[\/\-]/);
+            if (parts.length === 3) {
+                const y = parts[0].padStart(4, '0');
+                const m = parts[1].padStart(2, '0');
+                const d = parts[2].padStart(2, '0');
+                return `${y}/${m}/${d}`;
+            }
+            return res;
+        }
+
+        function toPersianDigits(str) {
+            const p = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(str).replace(/\d/g, x => p[x]);
+        }
+
+        const TODAY_JALALI_NORM = getTodayJalali();
+
+        // بررسی اینکه آیا یک فعالیت از تاریخ اتمام عبور کرده و تکمیل نشده است
+        function isActivityOverdue(item) {
+            if (Number(item.progress) >= 100) return false;
+            const endNorm = normalizeDateStr(item.endTime);
+            if (!endNorm) return false;
+            return endNorm < TODAY_JALALI_NORM;
+        }
+
+        // داده‌های اولیه واقعی و تخصصی مربوط به واحد آب و آبگیر پتروشیمی یوتیلیتی (با شماره تماس و تاریخ‌های متنوع)
+        let activities = [
+            {
+                id: 1,
+                desc: "نصب و هم‌محوری (Alignment) پمپ‌های اصلی انتقال آب خام حوضچه آبگیر (P-101A/B/C)",
+                type: "تجهیزات دوار (پمپ/توربین)",
+                startTime: "۱۴۰۵/۰۷/۱۵",
+                duration: 25,
+                endTime: "۱۴۰۵/۰۸/۱۰",
+                executor: "شرکت پمپ‌سازی و نصب نیرو",
+                directPerson: "مهندس امیرحسین کریمی",
+                directPhone: "09123451122",
+                follower: "مهندس کاظمی",
+                followerPhone: "09121112233",
+                engStatus: "تایید نهایی (AFC)",
+                matStatus: "تامین شده در سایت",
+                progress: 85,
+                issues: "نیاز به تایید نهایی وندور جهت تست گرم و ارتعاش‌سنجی",
+                notes: "گروت‌ریزی بیس‌پلیت انجام شده و آماده کوپل نهایی است.",
+                notified: false
+            },
+            {
+                id: 2,
+                desc: "اجرای پایپینگ خط مکش و رانش واحد کلرزنی (Chlorination Package) و تست هیدرواستاتیک",
+                type: "مکانیک و پایپینگ",
+                startTime: "۱۴۰۵/۰۸/۰۱",
+                duration: 18,
+                endTime: "۱۴۰۵/۰۸/۱۹",
+                executor: "پیمانکار پایپینگ سازان جنوب",
+                directPerson: "مهندس سجاد محمدی",
+                directPhone: "09173024455",
+                follower: "مهندس رضایی",
+                followerPhone: "09177778899",
+                engStatus: "تایید نهایی (AFC)",
+                matStatus: "در حال حمل / گمرک",
+                progress: 60,
+                issues: "تاخیر ۵ روزه در ارسال فلنج‌های ضدخوردگی FRP",
+                notes: "جوشکاری خطوط کربن استیل به اتمام رسیده و تست RT تایید شد.",
+                notified: false
+            },
+            {
+                id: 3,
+                desc: "نصب آشغال‌گیرهای مکانیکی چرخان (Traveling Band Screens) دهانه کانال آبگیر",
+                type: "تجهیزات دوار (پمپ/توربین)",
+                startTime: "۱۴۰۵/۰۷/۰۱",
+                duration: 30,
+                endTime: "۱۴۰۵/۰۸/۰۱",
+                executor: "شرکت مهندسی سازه آب",
+                directPerson: "مهندس امیرحسین کریمی",
+                directPhone: "09123451122",
+                follower: "مهندس حسینی",
+                followerPhone: "09124445566",
+                engStatus: "تایید نهایی (AFC)",
+                matStatus: "تامین شده در سایت",
+                progress: 100,
+                issues: "",
+                notes: "تست عملکرد مکانیکی بدون بار با موفقیت انجام و تحویل شد.",
+                notified: false
+            },
+            {
+                id: 4,
+                desc: "کابل‌کشی قدرت و فرمان تابلوهای MCC پست برق شماره ۲ واحد آبگیر و تصفیه",
+                type: "برق و ابزار دقیق",
+                startTime: "۱۴۰۵/۰۸/۰۵",
+                duration: 25,
+                endTime: "۱۴۰۵/۰۸/۳۰",
+                executor: "شرکت برق و کنترل پارس",
+                directPerson: "مهندس رضا نوری",
+                directPhone: "09132056677",
+                follower: "مهندس علوی",
+                followerPhone: "09135556677",
+                engStatus: "در دست بررسی",
+                matStatus: "تامین شده در سایت",
+                progress: 45,
+                issues: "مغایرت در نقشه لوپ دیاگرام ترانسمیترهای سطح حوضچه",
+                notes: "سینی‌گذاری تکمیل شده و ۶۵ درصد کابل‌های قدرت کشیده شده‌اند.",
+                notified: false
+            },
+            {
+                id: 5,
+                desc: "عایق‌بندی و پوشش اپوکسی ضدخوردگی دیواره‌های حوضچه تهی‌نشینی (Clarifier)",
+                type: "سیویل و سازه",
+                startTime: "۱۴۰۵/۰۸/۰۲",
+                duration: 14,
+                endTime: "۱۴۰۵/۰۸/۱۶",
+                executor: "پیمانکار ابنیه گستر",
+                directPerson: "مهندس بهرام شریفی",
+                directPhone: "09166089911",
+                follower: "مهندس مرادی",
+                followerPhone: "09161119988",
+                engStatus: "نیاز به اصلاح",
+                matStatus: "کسری متریال",
+                progress: 30,
+                issues: "کسری رنگ اپوکسی لایه نهایی و رطوبت بالای محیط در شیفت شب",
+                notes: "سندبلاست سطوح بتنی تکمیل و پرایمر اجرا شده است.",
+                notified: false
+            },
+            {
+                id: 6,
+                desc: "فلاشینگ، اسیدشویی و پیش‌راه‌اندازی سیستم خنک‌کننده مدار بسته (Cooling Water)",
+                type: "پیش‌راه‌اندازی و تست",
+                startTime: "۱۴۰۵/۰۸/۲۰",
+                duration: 15,
+                endTime: "۱۴۰۵/۰۹/۰۵",
+                executor: "تیم پیش‌راه‌اندازی یوتیلیتی",
+                directPerson: "مهندس سجاد محمدی",
+                directPhone: "09173024455",
+                follower: "مهندس کاظمی",
+                followerPhone: "09121112233",
+                engStatus: "تکمیل نشده",
+                matStatus: "در مرحله خرید",
+                progress: 15,
+                issues: "عدم تحویل پکیج تزریق مواد شیمیایی ضد رسوب (Anti-Scalant)",
+                notes: "دستورالعمل اجرایی Pre-commissioning تدوین شده است.",
+                notified: false
+            }
+        ];
+
+        let materialChartInstance = null;
+        let gaugeChartInstance = null;
+        let typeChartInstance = null;
+        let is3DEnabled = true;
+
+        // راه‌اندازی اولیه صفحه و اتصال قطعی کلیدهای منو
+        function bindMenuButtons() {
+            const btnOverview = document.getElementById('nav-overview');
+            const btnActivities = document.getElementById('nav-activities');
+            const btnNew = document.getElementById('nav-new-activity');
+            const btnOverdue = document.getElementById('nav-overdue-alert');
+            const btnReport = document.getElementById('nav-management-report');
+
+            if (btnOverview) btnOverview.addEventListener('click', () => switchTab('overview'));
+            if (btnActivities) btnActivities.addEventListener('click', () => switchTab('activities'));
+            if (btnNew) btnNew.addEventListener('click', () => openModal());
+            if (btnOverdue) btnOverdue.addEventListener('click', () => checkOverdueAndNotify(true));
+            if (btnReport) btnReport.addEventListener('click', () => openReportModal());
+        }
+
+        window.onload = function() {
+            document.getElementById('current-jalali-date').innerText = toPersianDigits(TODAY_JALALI_NORM);
+            bindMenuButtons();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            populateFilters();
+            renderDashboard();
+            init3DTiltEffect();
+            // بررسی خودکار تاخیرها پس از بارگذاری و نمایش اعلان هوشمند
+            setTimeout(() => {
+                checkOverdueAndNotify(false);
+            }, 900);
+        };
+
+        // تغییر حالت سه‌بعدی / دو بعدی
+        function toggle3DMode() {
+            is3DEnabled = !is3DEnabled;
+            const body = document.body;
+            const label = document.getElementById('btn-3d-label');
+            if (is3DEnabled) {
+                body.classList.add('mode-3d');
+                label.innerText = 'نمای سه‌بعدی: فعال';
+                showToast('نمای سه‌بعدی (3D) سامانه فعال شد.');
+            } else {
+                body.classList.remove('mode-3d');
+                document.querySelectorAll('.card-3d').forEach(el => el.style.transform = '');
+                label.innerText = 'نمای سه‌بعدی: غیرفعال';
+                showToast('نمای استاندارد فعال شد.');
+            }
+        }
+
+        // افکت حرکت سه‌بعدی با حرکت ماوس روی کارت‌های KPI و نمودارها
+        function init3DTiltEffect() {
+            document.addEventListener('mousemove', (e) => {
+                if (!is3DEnabled || window.innerWidth < 1024) return;
+                const cards = document.querySelectorAll('#charts-section > div');
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+                        const rotateY = ((x / rect.width) - 0.5) * 6;
+                        const rotateX = ((y / rect.height) - 0.5) * -6;
+                        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(12px)`;
+                    } else {
+                        card.style.transform = '';
+                    }
+                });
+            });
+        }
+
+        // پر کردن لیست اجراکنندگان و نفرات مستقیم در فیلتر
+        function populateFilters() {
+            const execSelect = document.getElementById('filter-executor');
+            if (execSelect) {
+                const currentExec = execSelect.value;
+                const executors = [...new Set(activities.map(a => a.executor).filter(Boolean))];
+                execSelect.innerHTML = '<option value="all">همه اجراکنندگان</option>';
+                executors.forEach(ex => {
+                    const opt = document.createElement('option');
+                    opt.value = ex;
+                    opt.textContent = ex;
+                    execSelect.appendChild(opt);
+                });
+                if (executors.includes(currentExec)) execSelect.value = currentExec;
+            }
+
+            const directSelect = document.getElementById('filter-direct-person');
+            if (directSelect) {
+                const currentDirect = directSelect.value;
+                const directPersons = [...new Set(activities.map(a => a.directPerson).filter(Boolean))];
+                directSelect.innerHTML = '<option value="all">همه نفرات مستقیم</option>';
+                directPersons.forEach(person => {
+                    const opt = document.createElement('option');
+                    opt.value = person;
+                    opt.textContent = person;
+                    directSelect.appendChild(opt);
+                });
+                if (directPersons.includes(currentDirect)) directSelect.value = currentDirect;
+            }
+        }
+
+        // دریافت داده‌های فیلتر شده
+        function getFilteredData() {
+            const searchEl = document.getElementById('filter-search');
+            const typeEl = document.getElementById('filter-type');
+            const engEl = document.getElementById('filter-eng');
+            const matEl = document.getElementById('filter-mat');
+            const execEl = document.getElementById('filter-executor');
+            const directEl = document.getElementById('filter-direct-person');
+
+            const search = searchEl ? searchEl.value.trim().toLowerCase() : '';
+            const type = typeEl ? typeEl.value : 'all';
+            const eng = engEl ? engEl.value : 'all';
+            const mat = matEl ? matEl.value : 'all';
+            const exec = execEl ? execEl.value : 'all';
+            const directPerson = directEl ? directEl.value : 'all';
+
+            return activities.filter(item => {
+                const matchSearch = item.desc.toLowerCase().includes(search) || 
+                                    item.follower.toLowerCase().includes(search) ||
+                                    (item.directPerson && item.directPerson.toLowerCase().includes(search)) ||
+                                    (item.directPhone && item.directPhone.includes(search)) ||
+                                    (item.issues && item.issues.toLowerCase().includes(search));
+                const matchType = type === 'all' || item.type === type;
+                const matchEng = eng === 'all' || item.engStatus === eng;
+                const matchMat = mat === 'all' || item.matStatus === mat;
+                const matchExec = exec === 'all' || item.executor === exec;
+                const matchDirect = directPerson === 'all' || item.directPerson === directPerson;
+                return matchSearch && matchType && matchEng && matchMat && matchExec && matchDirect;
+            });
+        }
+
+        function applyFilters() {
+            renderDashboard();
+        }
+
+        function filterByDirectPerson(personName) {
+            const select = document.getElementById('filter-direct-person');
+            select.value = (select.value === personName) ? 'all' : personName;
+            renderDashboard();
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-search').value = '';
+            document.getElementById('filter-type').value = 'all';
+            document.getElementById('filter-eng').value = 'all';
+            document.getElementById('filter-mat').value = 'all';
+            document.getElementById('filter-executor').value = 'all';
+            document.getElementById('filter-direct-person').value = 'all';
+            renderDashboard();
+        }
+
+        // رندر کامل داشبورد (کارت‌ها، نمودارها، باکس نفرات مستقیم و جدول)
+        function renderDashboard() {
+            const filtered = getFilteredData();
+            updateKPIs(filtered);
+            updateCharts(filtered);
+            renderDirectPersonsBox();
+            renderTable(filtered);
+            updateOverdueBadges();
+        }
+
+        // بروزرسانی شمارنده تاخیرها در سایدبار
+        function updateOverdueBadges() {
+            const overdueCount = activities.filter(isActivityOverdue).length;
+            const badge = document.getElementById('sidebar-overdue-badge');
+            if (badge) badge.innerText = overdueCount;
+        }
+
+        // رندر باکس پیگیری نفرات مستقیم
+        function renderDirectPersonsBox() {
+            const grid = document.getElementById('direct-persons-grid');
+            const selectedPerson = document.getElementById('filter-direct-person').value;
+            const btnShowAll = document.getElementById('btn-show-all-persons');
+
+            if (selectedPerson !== 'all') {
+                btnShowAll.classList.remove('hidden');
+                btnShowAll.classList.add('flex');
+            } else {
+                btnShowAll.classList.add('hidden');
+                btnShowAll.classList.remove('flex');
+            }
+
+            const persons = [...new Set(activities.map(a => a.directPerson).filter(Boolean))];
+            grid.innerHTML = '';
+
+            persons.forEach(person => {
+                const personTasks = activities.filter(a => a.directPerson === person);
+                const totalTasks = personTasks.length;
+                const avgProg = totalTasks > 0 ? Math.round(personTasks.reduce((s, t) => s + Number(t.progress), 0) / totalTasks) : 0;
+                const overdueTasks = personTasks.filter(isActivityOverdue);
+                const phone = personTasks.find(t => t.directPhone)?.directPhone || 'بدون شماره';
+                const isSelected = selectedPerson === person;
+
+                const card = document.createElement('div');
+                card.className = `rounded-2xl p-3.5 border transition-all flex flex-col justify-between gap-2.5 ${
+                    isSelected 
+                    ? 'bg-petro-800 text-white border-petro-900 shadow-lg ring-2 ring-petro-500' 
+                    : overdueTasks.length > 0
+                        ? 'bg-rose-50/60 hover:bg-rose-50 text-slate-800 border-rose-200'
+                        : 'bg-petro-50/70 hover:bg-petro-100/80 text-slate-800 border-petro-200'
+                }`;
+
+                card.innerHTML = `
+                    <div onclick="filterByDirectPerson('${person}')" class="cursor-pointer flex items-start justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0 ${
+                                isSelected ? 'bg-petro-600 text-white' : overdueTasks.length > 0 ? 'bg-rose-600 text-white' : 'bg-petro-700 text-white'
+                            }">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xs sm:text-sm leading-tight">${person}</h4>
+                                <a href="tel:${phone}" onclick="event.stopPropagation()" class="inline-flex items-center gap-1 text-[11px] font-mono mt-0.5 ${isSelected ? 'text-sky-300 hover:underline' : 'text-petro-700 hover:underline'}">
+                                    <i data-lucide="phone" class="w-3 h-3"></i>
+                                    <span dir="ltr">${phone}</span>
+                                </a>
+                            </div>
+                        </div>
+                        ${overdueTasks.length > 0 
+                            ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-600 text-white shrink-0 animate-pulse">${overdueTasks.length} تاخیر زمانی</span>` 
+                            : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${isSelected ? 'bg-sky-500/20 text-sky-300' : 'bg-blue-100 text-blue-800'} shrink-0">طبق برنامه</span>`
+                        }
+                    </div>
+                    <div onclick="filterByDirectPerson('${person}')" class="cursor-pointer">
+                        <div class="flex justify-between text-[11px] font-bold mb-1">
+                            <span class="${isSelected ? 'text-petro-200' : 'text-slate-600'}">پیشرفت (${totalTasks} فعالیت):</span>
+                            <span>${avgProg}%</span>
+                        </div>
+                        <div class="w-full h-2 rounded-full overflow-hidden ${isSelected ? 'bg-petro-950' : 'bg-slate-200'}">
+                            <div class="h-2 rounded-full transition-all duration-300 ${isSelected ? 'bg-sky-400' : overdueTasks.length > 0 ? 'bg-rose-500' : 'bg-petro-600'}" style="width: ${avgProg}%"></div>
+                        </div>
+                    </div>
+                    ${overdueTasks.length > 0 ? `
+                        <button type="button" onclick="openSingleAlert(${overdueTasks[0].id})" class="btn-embossed-danger w-full mt-0.5 py-1.5 px-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-[11px] font-bold flex items-center justify-center gap-1.5">
+                            <i data-lucide="message-square-warning" class="w-3.5 h-3.5"></i>
+                            <span>ارسال پیام پیگیری تاخیر به ${person.split(' ')[1] || person}</span>
+                        </button>
+                    ` : ''}
+                `;
+                grid.appendChild(card);
+            });
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        // بروزرسانی کارت‌های آماری (KPI)
+        function updateKPIs(data) {
+            const total = data.length;
+            const avgProgress = total > 0 ? Math.round(data.reduce((sum, item) => sum + Number(item.progress), 0) / total) : 0;
+            const completed = data.filter(item => Number(item.progress) === 100).length;
+            const overdueCount = data.filter(isActivityOverdue).length;
+            const totalDuration = data.reduce((sum, item) => sum + Number(item.duration), 0);
+
+            document.getElementById('kpi-total').innerText = total;
+            document.getElementById('kpi-progress').innerText = avgProgress + '%';
+            document.getElementById('kpi-completed').innerText = completed;
+            document.getElementById('kpi-overdue').innerText = overdueCount;
+            document.getElementById('kpi-duration').innerText = totalDuration;
+
+            // آمار زیر گیج
+            const inProgressCount = data.filter(item => Number(item.progress) > 0 && Number(item.progress) < 100).length;
+            const afcCount = data.filter(item => item.engStatus === 'تایید نهایی (AFC)').length;
+            document.getElementById('stat-inprogress').innerText = inProgressCount + ' مورد';
+            document.getElementById('stat-afc').innerText = afcCount + ' مورد';
+            document.getElementById('gauge-text').innerText = avgProgress + '%';
+        }
+
+        // بروزرسانی نمودارها با Chart.js
+        function updateCharts(data) {
+            if (typeof Chart === 'undefined') return;
+            Chart.defaults.font.family = 'Vazirmatn';
+            
+            // ۱. نمودار وضعیت متریال و کالا (افقی)
+            const matCategories = ['تامین شده در سایت', 'در حال حمل / گمرک', 'در مرحله خرید', 'کسری متریال'];
+            const matCounts = matCategories.map(cat => data.filter(d => d.matStatus === cat).length);
+
+            const ctxMat = document.getElementById('materialChart').getContext('2d');
+            if (materialChartInstance) materialChartInstance.destroy();
+            materialChartInstance = new Chart(ctxMat, {
+                type: 'bar',
+                data: {
+                    labels: matCategories,
+                    datasets: [{
+                        label: 'تعداد فعالیت',
+                        data: matCounts,
+                        backgroundColor: ['#1e3a8a', '#2563eb', '#38bdf8', '#f97316'],
+                        borderRadius: 6,
+                        barThickness: 22
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1, font: { size: 10 } },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        y: {
+                            ticks: { font: { size: 11, weight: 'bold' } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // ۲. نمودار گیج نیم‌دایره درصد پیشرفت کل
+            const avgProgress = data.length > 0 ? Math.round(data.reduce((sum, item) => sum + Number(item.progress), 0) / data.length) : 0;
+            const ctxGauge = document.getElementById('gaugeChart').getContext('2d');
+            if (gaugeChartInstance) gaugeChartInstance.destroy();
+            gaugeChartInstance = new Chart(ctxGauge, {
+                type: 'doughnut',
+                data: {
+                    labels: ['تکمیل شده', 'باقی‌مانده'],
+                    datasets: [{
+                        data: [avgProgress, 100 - avgProgress],
+                        backgroundColor: ['#1d4ed8', '#dbeafe'],
+                        borderWidth: 0,
+                        circumference: 180,
+                        rotation: 270,
+                        cutout: '75%',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    }
+                }
+            });
+
+            // ۳. نمودار میانگین پیشرفت بر اساس نوع فعالیت (تخصص)
+            const types = ['تجهیزات دوار (پمپ/توربین)', 'مکانیک و پایپینگ', 'برق و ابزار دقیق', 'سیویل و سازه', 'پیش‌راه‌اندازی و تست'];
+            const shortLabels = ['تجهیزات دوار', 'مکانیک و پایپینگ', 'برق و ابزاردقیق', 'سیویل و سازه', 'پیش‌راه‌اندازی'];
+            const typeProgress = types.map(t => {
+                const items = data.filter(d => d.type === t);
+                if (items.length === 0) return 0;
+                return Math.round(items.reduce((s, i) => s + Number(i.progress), 0) / items.length);
+            });
+
+            const ctxType = document.getElementById('typeChart').getContext('2d');
+            if (typeChartInstance) typeChartInstance.destroy();
+            typeChartInstance = new Chart(ctxType, {
+                type: 'bar',
+                data: {
+                    labels: shortLabels,
+                    datasets: [{
+                        label: 'میانگین پیشرفت (%)',
+                        data: typeProgress,
+                        backgroundColor: '#2563eb',
+                        hoverBackgroundColor: '#1e3a8a',
+                        borderRadius: 6,
+                        barThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { font: { size: 10 } },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        x: {
+                            ticks: { font: { size: 10, weight: 'bold' } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // رندر جدول فعالیت‌ها
+        function renderTable(data) {
+            const tbody = document.getElementById('activities-tbody');
+            document.getElementById('table-count').innerText = data.length + ' مورد';
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="15" class="text-center py-8 text-slate-400 font-medium">
+                            هیچ فعالیتی مطابق با فیلترهای انتخاب شده یافت نشد.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            data.forEach((item, index) => {
+                const overdue = isActivityOverdue(item);
+                const tr = document.createElement('tr');
+                tr.className = overdue 
+                    ? 'overdue-row hover:bg-rose-100/70 transition-colors' 
+                    : 'hover:bg-petro-50/60 transition-colors';
+
+                // رنگ‌بندی بج وضعیت مدارک مهندسی
+                let engBadge = 'bg-slate-100 text-slate-700';
+                if (item.engStatus === 'تایید نهایی (AFC)') engBadge = 'bg-emerald-100 text-emerald-800';
+                else if (item.engStatus === 'در دست بررسی') engBadge = 'bg-amber-100 text-amber-800';
+                else if (item.engStatus === 'نیاز به اصلاح' || item.engStatus === 'تکمیل نشده') engBadge = 'bg-rose-100 text-rose-800';
+
+                // رنگ‌بندی بج وضعیت متریال
+                let matBadge = 'bg-slate-100 text-slate-700';
+                if (item.matStatus === 'تامین شده در سایت') matBadge = 'bg-emerald-100 text-emerald-800';
+                else if (item.matStatus === 'در حال حمل / گمرک') matBadge = 'bg-sky-100 text-sky-800';
+                else if (item.matStatus === 'در مرحله خرید') matBadge = 'bg-amber-100 text-amber-800';
+                else if (item.matStatus === 'کسری متریال') matBadge = 'bg-rose-100 text-rose-800';
+
+                const hasIssue = item.issues && item.issues.trim() !== '' && item.issues.trim() !== 'بدون مشکل';
+
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-slate-500 text-center">${index + 1}</td>
+                    <td class="p-3 font-bold text-slate-800 leading-relaxed">
+                        <div class="flex flex-col gap-1">
+                            <span>${item.desc}</span>
+                            ${overdue ? `<span class="inline-flex items-center gap-1 w-fit px-2 py-0.5 rounded-md bg-rose-600 text-white text-[10px] font-bold"><i data-lucide="alarm-clock" class="w-3 h-3"></i> عبور از تاریخ اتمام!</span>` : ''}
+                        </div>
+                    </td>
+                    <td class="p-3 whitespace-nowrap">
+                        <span class="px-2.5 py-1 rounded-lg bg-petro-50 text-petro-800 font-medium border border-petro-200">${item.type}</span>
+                    </td>
+                    <td class="p-3 whitespace-nowrap font-medium text-slate-600">${item.startTime}</td>
+                    <td class="p-3 whitespace-nowrap font-bold text-slate-700">${item.duration} روز</td>
+                    <td class="p-3 whitespace-nowrap font-bold ${overdue ? 'text-rose-600 underline' : 'text-slate-600'}">${item.endTime}</td>
+                    <td class="p-3 whitespace-nowrap font-medium text-slate-800">${item.executor}</td>
+                    <td class="p-3 whitespace-nowrap">
+                        <div class="flex flex-col gap-1 items-start">
+                            <button type="button" onclick="filterByDirectPerson('${item.directPerson}')" title="فیلتر فعالیت‌های این نفر" class="btn-embossed-light inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-petro-100 hover:bg-petro-700 text-petro-900 hover:text-white font-bold">
+                                <i data-lucide="user-check" class="w-3 h-3"></i>
+                                <span>${item.directPerson || 'تعیین نشده'}</span>
+                            </button>
+                            ${item.directPhone ? `<a href="tel:${item.directPhone}" dir="ltr" class="text-[11px] font-mono text-petro-700 hover:underline px-1.5 flex items-center gap-1"><i data-lucide="phone" class="w-3 h-3"></i>${item.directPhone}</a>` : ''}
+                        </div>
+                    </td>
+                    <td class="p-3 whitespace-nowrap text-slate-700">
+                        <div class="flex flex-col gap-0.5">
+                            <span class="font-medium">${item.follower}</span>
+                            ${item.followerPhone ? `<a href="tel:${item.followerPhone}" dir="ltr" class="text-[10px] font-mono text-slate-500 hover:text-petro-700">${item.followerPhone}</a>` : ''}
+                        </div>
+                    </td>
+                    <td class="p-3 whitespace-nowrap">
+                        <select onchange="inlineUpdateField(${item.id}, 'engStatus', this.value)" title="تغییر سریع وضعیت مدارک مهندسی" class="px-2 py-1 rounded-full text-[11px] font-bold border border-transparent hover:border-blue-400 cursor-pointer focus:outline-none ${engBadge}">
+                            <option value="تایید نهایی (AFC)" ${item.engStatus === 'تایید نهایی (AFC)' ? 'selected' : ''}>تایید نهایی (AFC)</option>
+                            <option value="در دست بررسی" ${item.engStatus === 'در دست بررسی' ? 'selected' : ''}>در دست بررسی</option>
+                            <option value="نیاز به اصلاح" ${item.engStatus === 'نیاز به اصلاح' ? 'selected' : ''}>نیاز به اصلاح</option>
+                            <option value="تکمیل نشده" ${item.engStatus === 'تکمیل نشده' ? 'selected' : ''}>تکمیل نشده</option>
+                        </select>
+                    </td>
+                    <td class="p-3 whitespace-nowrap">
+                        <select onchange="inlineUpdateField(${item.id}, 'matStatus', this.value)" title="تغییر سریع وضعیت متریال و کالا" class="px-2 py-1 rounded-full text-[11px] font-bold border border-transparent hover:border-blue-400 cursor-pointer focus:outline-none ${matBadge}">
+                            <option value="تامین شده در سایت" ${item.matStatus === 'تامین شده در سایت' ? 'selected' : ''}>تامین شده در سایت</option>
+                            <option value="در حال حمل / گمرک" ${item.matStatus === 'در حال حمل / گمرک' ? 'selected' : ''}>در حال حمل / گمرک</option>
+                            <option value="در مرحله خرید" ${item.matStatus === 'در مرحله خرید' ? 'selected' : ''}>در مرحله خرید</option>
+                            <option value="کسری متریال" ${item.matStatus === 'کسری متریال' ? 'selected' : ''}>کسری متریال</option>
+                        </select>
+                    </td>
+                    <td class="p-3">
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center justify-between text-[11px] font-bold gap-1">
+                                <span class="text-petro-900">${item.progress}%</span>
+                                <div class="flex items-center gap-1">
+                                    <button type="button" onclick="quickDecrement(${item.id})" title="کاهش ۱۰٪ پیشرفت" class="btn-embossed-light text-[10px] bg-slate-100 hover:bg-rose-600 hover:text-white text-slate-700 px-1.5 py-0.5 rounded-md font-bold">-10%</button>
+                                    ${item.progress < 100 ? `<button type="button" onclick="quickIncrement(${item.id})" title="افزایش ۱۰٪ پیشرفت" class="btn-embossed-light text-[10px] bg-petro-100 hover:bg-petro-700 hover:text-white text-petro-800 px-1.5 py-0.5 rounded-md font-bold">+10%</button>` : '<span class="text-blue-600 text-[10px] font-bold">تکمیل</span>'}
+                                </div>
+                            </div>
+                            <input type="range" min="0" max="100" value="${item.progress}" onchange="inlineUpdateField(${item.id}, 'progress', Number(this.value))" title="تغییر مستقیم درصد پیشرفت" class="w-full h-2 accent-blue-700 cursor-pointer">
+                        </div>
+                    </td>
+                    <td class="p-3">
+                        ${hasIssue 
+                            ? `<div class="flex items-start gap-1 text-rose-700 bg-rose-50 p-1.5 rounded-lg border border-rose-100"><i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0 mt-0.5"></i><span>${item.issues}</span></div>` 
+                            : `<span class="text-blue-600 font-medium">بدون مشکل</span>`
+                        }
+                    </td>
+                    <td class="p-3 text-slate-600 leading-relaxed">${item.notes || '-'}</td>
+                    <td class="p-3 text-center whitespace-nowrap sticky left-0 bg-white/95 backdrop-blur-sm border-r border-slate-100">
+                        <div class="flex items-center justify-center gap-1.5">
+                            ${overdue ? `
+                                <button type="button" onclick="openSingleAlert(${item.id})" title="ارسال پیام هشدار تاخیر به نفر مستقیم" class="btn-embossed-danger p-1.5 rounded-lg bg-rose-600 text-white hover:bg-rose-500 animate-pulse">
+                                    <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                                </button>
+                            ` : ''}
+                            <button type="button" onclick="editActivity(${item.id})" title="بروزرسانی و ویرایش" class="btn-embossed-light p-1.5 rounded-lg bg-amber-100 text-amber-800 hover:bg-amber-500 hover:text-white">
+                                <i data-lucide="edit-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                            <button type="button" onclick="deleteActivity(${item.id})" title="حذف ردیف" class="btn-embossed-light p-1.5 rounded-lg bg-rose-100 text-rose-700 hover:bg-rose-600 hover:text-white">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        // افزایش سریع ۱۰ درصد پیشرفت در جدول
+        function quickIncrement(id) {
+            const idx = activities.findIndex(a => a.id === id);
+            if (idx !== -1) {
+                activities[idx].progress = Math.min(100, Number(activities[idx].progress) + 10);
+                renderDashboard();
+                showToast(`پیشرفت فعالیت به ${activities[idx].progress}٪ بروزرسانی شد.`);
+            }
+        }
+
+        // کاهش سریع ۱۰ درصد پیشرفت در جدول
+        function quickDecrement(id) {
+            const idx = activities.findIndex(a => a.id === id);
+            if (idx !== -1) {
+                activities[idx].progress = Math.max(0, Number(activities[idx].progress) - 10);
+                renderDashboard();
+                showToast(`پیشرفت فعالیت به ${activities[idx].progress}٪ کاهش یافت.`);
+            }
+        }
+
+        // ویرایش سریع و مستقیم هر فیلد در جدول و اعمال فوری روی کل داشبورد و نمودارها
+        function inlineUpdateField(id, field, value) {
+            const idx = activities.findIndex(a => a.id === id);
+            if (idx !== -1) {
+                activities[idx][field] = value;
+                renderDashboard();
+                showToast('تغییرات اعمال شد و نمودارها و شاخص‌ها بروزرسانی شدند.');
+            }
+        }
+
+        // باز کردن مودال برای ثبت جدید
+        function openModal() {
+            document.getElementById('activity-form').reset();
+            document.getElementById('form-id').value = '';
+            document.getElementById('form-progress').value = 0;
+            document.getElementById('range-val').innerText = '0%';
+            document.getElementById('modal-title').innerText = 'ثبت فعالیت جدید در واحد آب و آبگیر';
+            const modal = document.getElementById('activity-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // باز کردن مودال برای ویرایش / بروزرسانی
+        function editActivity(id) {
+            const item = activities.find(a => a.id === id);
+            if (!item) return;
+
+            document.getElementById('form-id').value = item.id;
+            document.getElementById('form-desc').value = item.desc;
+            document.getElementById('form-type').value = item.type;
+            document.getElementById('form-start').value = item.startTime;
+            document.getElementById('form-duration').value = item.duration;
+            document.getElementById('form-end').value = item.endTime;
+            document.getElementById('form-executor').value = item.executor;
+            document.getElementById('form-direct-person').value = item.directPerson || '';
+            document.getElementById('form-direct-phone').value = item.directPhone || '';
+            document.getElementById('form-follower').value = item.follower;
+            document.getElementById('form-follower-phone').value = item.followerPhone || '';
+            document.getElementById('form-eng').value = item.engStatus;
+            document.getElementById('form-mat').value = item.matStatus;
+            document.getElementById('form-progress').value = item.progress;
+            document.getElementById('range-val').innerText = item.progress + '%';
+            document.getElementById('form-issues').value = item.issues;
+            document.getElementById('form-notes').value = item.notes;
+
+            document.getElementById('modal-title').innerText = 'بروزرسانی اطلاعات و وضعیت پیشرفت فعالیت';
+            const modal = document.getElementById('activity-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('activity-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // ذخیره فعالیت (جدید یا ویرایش شده)
+        function saveActivity(e) {
+            e.preventDefault();
+            const idVal = document.getElementById('form-id').value;
+
+            const payload = {
+                id: idVal ? Number(idVal) : Date.now(),
+                desc: document.getElementById('form-desc').value.trim(),
+                type: document.getElementById('form-type').value,
+                startTime: document.getElementById('form-start').value.trim(),
+                duration: Number(document.getElementById('form-duration').value),
+                endTime: document.getElementById('form-end').value.trim(),
+                executor: document.getElementById('form-executor').value.trim(),
+                directPerson: document.getElementById('form-direct-person').value.trim(),
+                directPhone: document.getElementById('form-direct-phone').value.trim(),
+                follower: document.getElementById('form-follower').value.trim(),
+                followerPhone: document.getElementById('form-follower-phone').value.trim(),
+                engStatus: document.getElementById('form-eng').value,
+                matStatus: document.getElementById('form-mat').value,
+                progress: Number(document.getElementById('form-progress').value),
+                issues: document.getElementById('form-issues').value.trim(),
+                notes: document.getElementById('form-notes').value.trim(),
+                notified: false
+            };
+
+            if (idVal) {
+                const index = activities.findIndex(a => a.id === Number(idVal));
+                if (index !== -1) activities[index] = payload;
+                showToast('اطلاعات فعالیت با موفقیت بروزرسانی شد.');
+            } else {
+                activities.unshift(payload);
+                showToast('فعالیت جدید با موفقیت به سامانه اضافه شد.');
+            }
+
+            populateFilters();
+            renderDashboard();
+            closeModal();
+
+            // اگر فعالیت ذخیره شده تاریخ اتمامش گذشته و تکمیل نشده باشد، بلافاصله پیام هشدار آماده شود
+            if (isActivityOverdue(payload)) {
+                setTimeout(() => openSingleAlert(payload.id), 400);
+            }
+        }
+
+        // تولید متن پیام هشدار تاخیر برای شخص مسئول
+        function buildAlertMessage(item) {
+            return `هشدار کنترل پروژه واحد آب و آبگیر (پتروشیمی دماوند انرژی عسلویه):\nهمکار گرامی ${item.directPerson}، مهلت اتمام فعالیت «${item.desc}» در تاریخ ${item.endTime} به پایان رسیده و پیشرفت فعلی ${item.progress}٪ است. لطفاً جهت رفع موانع و بروزرسانی وضعیت اقدام فرمایید.`;
+        }
+
+        // باز کردن پنجره هشدار برای یک فعالیت خاص یا کل فعالیت‌های دارای تاخیر
+        function openSingleAlert(id) {
+            const item = activities.find(a => a.id === id);
+            if (!item) return;
+            renderOverdueModal([item]);
+        }
+
+        function checkOverdueAndNotify(forceOpenModal) {
+            const overdueItems = activities.filter(isActivityOverdue);
+            if (overdueItems.length === 0) {
+                if (forceOpenModal) {
+                    showToast('هیچ فعالیت عقب‌افتاده‌ای وجود ندارد؛ همه فعالیت‌ها طبق برنامه هستند.');
+                }
+                return;
+            }
+            if (forceOpenModal) {
+                renderOverdueModal(overdueItems);
+            } else {
+                showToast(`توجه: ${overdueItems.length} فعالیت از تاریخ اتمام عبور کرده‌اند! روی دکمه «هشدار تاخیرها» کلیک کنید.`);
+            }
+        }
+
+        function renderOverdueModal(items) {
+            const container = document.getElementById('overdue-list');
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                const msg = buildAlertMessage(item);
+                const cleanPhone = (item.directPhone || '').replace(/[^0-9]/g, '');
+                const waPhone = cleanPhone.startsWith('0') ? '98' + cleanPhone.slice(1) : cleanPhone;
+                const smsLink = `sms:${cleanPhone}?body=${encodeURIComponent(msg)}`;
+                const waLink = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
+
+                const card = document.createElement('div');
+                card.className = 'p-4 rounded-2xl border border-rose-200 bg-rose-50/50 flex flex-col gap-2.5';
+                card.innerHTML = `
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-1 rounded-full bg-rose-600 text-white text-[11px] font-bold">تاخیر زمانی</span>
+                            <h4 class="font-bold text-xs sm:text-sm text-slate-800">${item.directPerson}</h4>
+                            <span dir="ltr" class="text-xs font-mono bg-white px-2 py-0.5 rounded-lg border border-slate-200 text-slate-700">${item.directPhone || 'بدون شماره'}</span>
+                        </div>
+                        <span class="text-[11px] font-bold text-rose-700">موعد اتمام: ${item.endTime} | پیشرفت: ${item.progress}%</span>
+                    </div>
+                    <p class="text-xs text-slate-700 bg-white p-3 rounded-xl border border-rose-100 leading-relaxed whitespace-pre-line">${msg}</p>
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <button type="button" onclick="extendDeadlineDays(${item.id}, 7)" class="btn-embossed-light px-2.5 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-[11px] font-bold flex items-center gap-1">
+                                <i data-lucide="calendar-plus" class="w-3.5 h-3.5"></i>
+                                <span>تمدید ۷ روزه مهلت</span>
+                            </button>
+                            <button type="button" onclick="completeOverdueActivity(${item.id})" class="btn-embossed-light px-2.5 py-1.5 rounded-xl bg-blue-100 hover:bg-blue-200 text-blue-900 text-[11px] font-bold flex items-center gap-1">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                                <span>تکمیل ۱۰۰٪</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="copyAlertText(${item.id})" class="btn-embossed-light px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold flex items-center gap-1">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                                <span>کپی متن پیام</span>
+                            </button>
+                            ${cleanPhone ? `
+                                <a href="${smsLink}" onclick="markAsNotified(${item.id})" class="btn-embossed px-3 py-1.5 rounded-xl bg-petro-700 hover:bg-petro-800 text-white text-[11px] font-bold flex items-center gap-1">
+                                    <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                                    <span>ارسال پیامک (SMS)</span>
+                                </a>
+                                <a href="${waLink}" target="_blank" onclick="markAsNotified(${item.id})" class="btn-embossed px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-[11px] font-bold flex items-center gap-1">
+                                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                    <span>ارسال در واتساپ</span>
+                                </a>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            const modal = document.getElementById('overdue-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeOverdueModal() {
+            const modal = document.getElementById('overdue-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function copyAlertText(id) {
+            const item = activities.find(a => a.id === id);
+            if (!item) return;
+            const textarea = document.createElement('textarea');
+            textarea.value = buildAlertMessage(item);
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            markAsNotified(id);
+            showToast(`متن پیام هشدار برای ${item.directPerson} کپی شد.`);
+        }
+
+        function markAsNotified(id) {
+            const item = activities.find(a => a.id === id);
+            if (item) item.notified = true;
+        }
+
+        function sendAllOverdueSimulated() {
+            const overdueItems = activities.filter(isActivityOverdue);
+            overdueItems.forEach(i => i.notified = true);
+            closeOverdueModal();
+            showToast(`پیام هشدار تاخیر برای ${overdueItems.length} نفر مستقیم مسئول ثبت و ارسال شد.`);
+        }
+
+        // تمدید مهلت فعالیت دارای تاخیر از داخل پنجره هشدار
+        function extendDeadlineDays(id, daysToAdd) {
+            const idx = activities.findIndex(a => a.id === id);
+            if (idx === -1) return;
+            const norm = normalizeDateStr(activities[idx].endTime);
+            const parts = norm.split('/').map(Number);
+            if (parts.length === 3) {
+                let [y, m, d] = parts;
+                d += daysToAdd;
+                while (d > 30) { d -= 30; m += 1; }
+                while (m > 12) { m -= 12; y += 1; }
+                const newEnd = toPersianDigits(`${y}/${String(m).padStart(2, '0')}/${String(d).padStart(2, '0')}`);
+                activities[idx].endTime = newEnd;
+                activities[idx].duration = Number(activities[idx].duration) + daysToAdd;
+                renderDashboard();
+                const remaining = activities.filter(isActivityOverdue);
+                if (remaining.length > 0) renderOverdueModal(remaining);
+                else closeOverdueModal();
+                showToast(`مهلت اتمام فعالیت به تاریخ ${newEnd} تمدید شد.`);
+            }
+        }
+
+        // تکمیل سریع فعالیت دارای تاخیر از داخل پنجره هشدار
+        function completeOverdueActivity(id) {
+            const idx = activities.findIndex(a => a.id === id);
+            if (idx === -1) return;
+            activities[idx].progress = 100;
+            renderDashboard();
+            const remaining = activities.filter(isActivityOverdue);
+            if (remaining.length > 0) renderOverdueModal(remaining);
+            else closeOverdueModal();
+            showToast('فعالیت به عنوان ۱۰۰٪ تکمیل‌شده ثبت و از لیست تاخیرها خارج شد.');
+        }
+
+        // حذف ردیف
+        function deleteActivity(id) {
+            activities = activities.filter(a => a.id !== id);
+            populateFilters();
+            renderDashboard();
+            showToast('ردیف مورد نظر از لیست حذف شد.');
+        }
+
+        // تغییر تب نمای کلی یا تمرکز بر جدول
+        function switchTab(tab) {
+            const kpiSec = document.getElementById('kpi-section');
+            const chartsSec = document.getElementById('charts-section');
+            const directSec = document.getElementById('direct-persons-section');
+            const tableSec = document.getElementById('activities-table-section');
+            const btnOverview = document.getElementById('nav-overview');
+            const btnActivities = document.getElementById('nav-activities');
+
+            if (tab === 'overview') {
+                kpiSec.classList.remove('hidden');
+                chartsSec.classList.remove('hidden');
+                directSec.classList.remove('hidden');
+                btnOverview.className = 'nav-btn btn-embossed-light w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium bg-petro-100 text-petro-900 font-bold whitespace-nowrap cursor-pointer';
+                btnActivities.className = 'nav-btn btn-embossed w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium bg-petro-800 text-petro-100 hover:bg-petro-700 border border-petro-600/50 whitespace-nowrap cursor-pointer';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showToast('نمای کلی و شاخص‌ها نمایش داده شد.');
+            } else {
+                kpiSec.classList.add('hidden');
+                chartsSec.classList.add('hidden');
+                directSec.classList.add('hidden');
+                btnActivities.className = 'nav-btn btn-embossed-light w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium bg-petro-100 text-petro-900 font-bold whitespace-nowrap cursor-pointer';
+                btnOverview.className = 'nav-btn btn-embossed w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium bg-petro-800 text-petro-100 hover:bg-petro-700 border border-petro-600/50 whitespace-nowrap cursor-pointer';
+                tableSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                showToast('نمای متمرکز جدول جامع فعالیت‌ها فعال شد.');
+            }
+        }
+
+        // باز کردن و مدیریت مودال گزارش به ریاست کارگاه و معاونت‌ها
+        function openReportModal() {
+            document.getElementById('report-date-badge').innerText = 'تاریخ گزارش: ' + toPersianDigits(TODAY_JALALI_NORM);
+            generateManagementReport();
+            const modal = document.getElementById('management-report-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function closeReportModal() {
+            const modal = document.getElementById('management-report-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function generateManagementReport() {
+            const recipient = document.getElementById('report-recipient').value;
+            const scope = document.getElementById('report-scope').value;
+            const dateStr = toPersianDigits(TODAY_JALALI_NORM);
+
+            const total = activities.length;
+            const avgProgress = total > 0 ? Math.round(activities.reduce((s, a) => s + Number(a.progress), 0) / total) : 0;
+            const completed = activities.filter(a => Number(a.progress) === 100).length;
+            const overdueItems = activities.filter(isActivityOverdue);
+            const afcCount = activities.filter(a => a.engStatus === 'تایید نهایی (AFC)').length;
+            const matReadyCount = activities.filter(a => a.matStatus === 'تامین شده در سایت').length;
+
+            let report = `بسمه تعالی\n`;
+            report += `محضر ${recipient}\n`;
+            report += `موضوع: گزارش وضعیت پیشرفت و پیگیری فعالیت‌های قابل اجرا - واحد آب و آبگیر (پتروشیمی دماوند انرژی عسلویه)\n`;
+            report += `تاریخ تنظیم گزارش: ${dateStr}\n`;
+            report += `--------------------------------------------------\n`;
+            report += `۱. خلاصه شاخص‌های کلیدی عملکرد (KPI):\n`;
+            report += `• کل فعالیت‌های برنامه‌ریزی شده: ${total} مورد\n`;
+            report += `• میانگین پیشرفت فیزیکی کل واحد: ${avgProgress}٪\n`;
+            report += `• فعالیت‌های تکمیل شده (۱۰۰٪): ${completed} مورد\n`;
+            report += `• فعالیت‌های دارای تاخیر زمانی: ${overdueItems.length} مورد\n`;
+            report += `• مدارک مهندسی تایید نهایی (AFC): ${afcCount} از ${total} مورد\n`;
+            report += `• متریال تامین شده در سایت: ${matReadyCount} از ${total} مورد\n\n`;
+
+            if (scope === 'summary' || scope === 'overdue') {
+                report += `۲. وضعیت فعالیت‌های دارای تاخیر و نیازمند تصمیم مدیریتی:\n`;
+                if (overdueItems.length === 0) {
+                    report += `• خوشبختانه در حال حاضر هیچ فعالیت عقب‌افتاده‌ای وجود ندارد.\n`;
+                } else {
+                    overdueItems.forEach((item, idx) => {
+                        report += `${idx + 1}) ${item.desc}\n`;
+                        report += `   - مسئول مستقیم: ${item.directPerson} (${item.directPhone}) | پیشرفت: ${item.progress}٪ | موعد اتمام: ${item.endTime}\n`;
+                        if (item.issues) report += `   - مانع/مشکل: ${item.issues}\n`;
+                    });
+                }
+                report += `\n`;
+            }
+
+            if (scope === 'summary' || scope === 'procurement') {
+                report += `۳. وضعیت مدارک مهندسی و تامین کالا/متریال:\n`;
+                activities.forEach((item, idx) => {
+                    report += `${idx + 1}) ${item.desc.slice(0, 55)}... -> مدارک: [${item.engStatus}] | متریال: [${item.matStatus}] | پیشرفت: ${item.progress}٪\n`;
+                });
+                report += `\n`;
+            }
+
+            report += `با تقدیم احترام\nواحد کنترل پروژه و اجرای آب و آبگیر - پتروشیمی دماوند انرژی عسلویه`;
+            document.getElementById('management-report-text').value = report;
+        }
+
+        function copyManagementReport() {
+            const textarea = document.getElementById('management-report-text');
+            textarea.select();
+            document.execCommand('copy');
+            showToast('متن گزارش مدیریتی در حافظه کپی شد.');
+        }
+
+        function sendReportViaWhatsApp() {
+            const recipient = document.getElementById('report-recipient').value;
+            const text = document.getElementById('management-report-text').value;
+            const rawPhone = document.getElementById('report-phone').value.replace(/[^0-9]/g, '');
+            const waPhone = rawPhone.startsWith('0') ? '98' + rawPhone.slice(1) : rawPhone;
+            const url = waPhone ? `https://wa.me/${waPhone}?text=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+            showToast(`پنجره ارسال گزارش به ${recipient} در واتساپ باز شد.`);
+        }
+
+        function sendReportViaSMS() {
+            const recipient = document.getElementById('report-recipient').value;
+            const text = document.getElementById('management-report-text').value;
+            const rawPhone = document.getElementById('report-phone').value.replace(/[^0-9]/g, '');
+            window.location.href = `sms:${rawPhone}?body=${encodeURIComponent(text)}`;
+            showToast(`گزارش برای ارسال پیامک به ${recipient} آماده شد.`);
+        }
+
+        function printManagementReport() {
+            const recipient = document.getElementById('report-recipient').value;
+            const text = document.getElementById('management-report-text').value;
+            const printWin = window.open('', '_blank', 'width=800,height=700');
+            printWin.document.write(`
+                <html lang="fa" dir="rtl">
+                <head>
+                    <title>گزارش مدیریتی - پتروشیمی دماوند انرژی عسلویه</title>
+                    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+                    <style>
+                        body { font-family: 'Vazirmatn', sans-serif; padding: 30px; line-height: 1.9; color: #0f172a; }
+                        .header { border-bottom: 3px solid #1e3a8a; padding-bottom: 12px; margin-bottom: 20px; text-align: center; }
+                        pre { white-space: pre-wrap; font-family: 'Vazirmatn', sans-serif; font-size: 13px; background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #cbd5e1; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h2>پتروشیمی دماوند انرژی عسلویه</h2>
+                        <p>گزارش رسمی واحد آب و آبگیر جهت ارائه به ${recipient}</p>
+                    </div>
+                    <pre>${text}</pre>
+                    <script>window.onload = function() { window.print(); }<\/script>
+                </body>
+                </html>
+            `);
+            printWin.document.close();
+        }
+
+        // خروجی گرفتن CSV سازگار با اکسل فارسی (UTF-8 BOM)
+        function exportToCSV() {
+            const data = getFilteredData();
+            const headers = [
+                'شرح کار', 'نوع فعالیت', 'زمان انجام فعالیت', 'مدت زمان اجرا (روز)',
+                'تاریخ اتمام', 'وضعیت زمانی', 'اجرا کننده', 'نفر مستقیم', 'شماره تماس نفر مستقیم',
+                'پیگیری کننده', 'شماره تماس پیگیری کننده', 'وضعیت مدارک مهندسی',
+                'وضعیت متریال و کالا', 'درصد پیشرفت', 'مشکلات', 'توضیحات'
+            ];
+
+            const rows = data.map(item => [
+                `"${item.desc.replace(/"/g, '""')}"`,
+                `"${item.type}"`,
+                `"${item.startTime}"`,
+                item.duration,
+                `"${item.endTime}"`,
+                `"${isActivityOverdue(item) ? 'دارای تاخیر' : 'طبق برنامه'}"`,
+                `"${item.executor}"`,
+                `"${item.directPerson || ''}"`,
+                `"${item.directPhone || ''}"`,
+                `"${item.follower}"`,
+                `"${item.followerPhone || ''}"`,
+                `"${item.engStatus}"`,
+                `"${item.matStatus}"`,
+                `${item.progress}%`,
+                `"${(item.issues || '').replace(/"/g, '""')}"`,
+                `"${(item.notes || '').replace(/"/g, '""')}"`
+            ]);
+
+            const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'Water_Intake_Activities_Report.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast('فایل خروجی اکسل با موفقیت دانلود شد.');
+        }
+
+        // نمایش نوتیفیکیشن پایین صفحه
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
